@@ -1,21 +1,33 @@
-const rateLimit = new Map<string, { count: number; resetTime: number }>();
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
-const WINDOW_MS = parseInt(process.env.RATE_LIMIT_WINDOW_MS || "60000", 10);
-const MAX_REQUESTS = parseInt(process.env.RATE_LIMIT_MAX || "5", 10);
+let ratelimit: Ratelimit | null = null;
 
-export function checkRateLimit(identifier: string): { allowed: boolean; remaining: number } {
-  const now = Date.now();
-  const entry = rateLimit.get(identifier);
+function getRatelimit() {
+  if (ratelimit) return ratelimit;
 
-  if (!entry || now > entry.resetTime) {
-    rateLimit.set(identifier, { count: 1, resetTime: now + WINDOW_MS });
-    return { allowed: true, remaining: MAX_REQUESTS - 1 };
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (!url || !token) return null;
+
+  ratelimit = new Ratelimit({
+    redis: new Redis({ url, token }),
+    limiter: Ratelimit.slidingWindow(5, "60 s"),
+    analytics: true,
+    prefix: "brandforge:ratelimit",
+  });
+
+  return ratelimit;
+}
+
+export async function checkRateLimit(identifier: string): Promise<{ allowed: boolean; remaining: number }> {
+  const limiter = getRatelimit();
+
+  if (!limiter) {
+    return { allowed: true, remaining: 99 };
   }
 
-  if (entry.count >= MAX_REQUESTS) {
-    return { allowed: false, remaining: 0 };
-  }
-
-  entry.count++;
-  return { allowed: true, remaining: MAX_REQUESTS - entry.count };
+  const { success, remaining } = await limiter.limit(identifier);
+  return { allowed: success, remaining };
 }

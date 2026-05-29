@@ -47,7 +47,7 @@ function validatePayload(body: unknown): { valid: boolean; error?: string; data?
 export async function POST(request: NextRequest) {
   try {
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const { allowed, remaining } = checkRateLimit(ip);
+    const { allowed, remaining } = await checkRateLimit(ip);
 
     if (!allowed) {
       return NextResponse.json(
