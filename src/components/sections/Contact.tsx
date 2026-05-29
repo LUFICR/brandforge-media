@@ -8,14 +8,51 @@ import { useInView } from "@/hooks/useInView";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useState } from "react";
 
+type FormStatus = "idle" | "submitting" | "success" | "error";
+
 export function Contact() {
   const [ref, isInView] = useInView<HTMLElement>({ threshold: 0.1 });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setStatus("submitting");
+    setErrorMsg("");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const payload = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      service: formData.get("service") as string,
+      message: formData.get("message") as string,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrorMsg(data.error || "Something went wrong");
+        setStatus("error");
+        return;
+      }
+
+      setStatus("success");
+      form.reset();
+      setTimeout(() => setStatus("idle"), 4000);
+    } catch {
+      setErrorMsg("Network error. Please try again.");
+      setStatus("error");
+    }
   };
 
   return (
@@ -41,6 +78,7 @@ export function Contact() {
                     <label htmlFor="name" className="block text-xs text-[#A0A0B8] mb-2">Name</label>
                     <input
                       id="name"
+                      name="name"
                       type="text"
                       required
                       className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-sm placeholder:text-[#6B6B80] focus:border-[#6C63FF] focus:outline-none focus:ring-1 focus:ring-[#6C63FF]/50 transition-all"
@@ -51,6 +89,7 @@ export function Contact() {
                     <label htmlFor="email" className="block text-xs text-[#A0A0B8] mb-2">Email</label>
                     <input
                       id="email"
+                      name="email"
                       type="email"
                       required
                       className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-sm placeholder:text-[#6B6B80] focus:border-[#6C63FF] focus:outline-none focus:ring-1 focus:ring-[#6C63FF]/50 transition-all"
@@ -64,6 +103,7 @@ export function Contact() {
                     <label htmlFor="phone" className="block text-xs text-[#A0A0B8] mb-2">Phone</label>
                     <input
                       id="phone"
+                      name="phone"
                       type="tel"
                       className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-sm placeholder:text-[#6B6B80] focus:border-[#6C63FF] focus:outline-none focus:ring-1 focus:ring-[#6C63FF]/50 transition-all"
                       placeholder="Your phone number"
@@ -73,6 +113,7 @@ export function Contact() {
                     <label htmlFor="service" className="block text-xs text-[#A0A0B8] mb-2">Service</label>
                     <select
                       id="service"
+                      name="service"
                       className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-sm focus:border-[#6C63FF] focus:outline-none focus:ring-1 focus:ring-[#6C63FF]/50 transition-all appearance-none"
                     >
                       <option value="" className="bg-[#12121A]">Select a service</option>
@@ -90,6 +131,7 @@ export function Contact() {
                   <label htmlFor="message" className="block text-xs text-[#A0A0B8] mb-2">Message</label>
                   <textarea
                     id="message"
+                    name="message"
                     rows={4}
                     required
                     className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-sm placeholder:text-[#6B6B80] focus:border-[#6C63FF] focus:outline-none focus:ring-1 focus:ring-[#6C63FF]/50 transition-all resize-none"
@@ -97,11 +139,19 @@ export function Contact() {
                   />
                 </div>
 
+                {status === "error" && (
+                  <p className="text-xs text-red-400">{errorMsg}</p>
+                )}
+
                 <MagneticButton
                   className="!w-full"
                   onClick={() => {}}
                 >
-                  {submitted ? "Message Sent!" : "Send Message"}
+                  {status === "submitting"
+                    ? "Sending..."
+                    : status === "success"
+                      ? "Message Sent!"
+                      : "Send Message"}
                 </MagneticButton>
               </form>
             </GlassCard>

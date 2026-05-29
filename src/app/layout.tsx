@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import { ClientProviders } from "@/components/providers/ClientProviders";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { SentryInit } from "@/components/analytics/SentryInit";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -81,6 +83,8 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} dark`}
     >
       <body className="min-h-dvh bg-background text-foreground font-sans antialiased">
+        <GoogleAnalytics />
+        <SentryInit />
         <JsonLd />
         <ClientProviders>{children}</ClientProviders>
       </body>
