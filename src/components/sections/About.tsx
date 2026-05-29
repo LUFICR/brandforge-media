@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { GlassCard } from "@/components/shared/GlassCard";
 import { useInView } from "@/hooks/useInView";
@@ -27,9 +28,13 @@ export function About() {
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#6C63FF]/20 via-[#00D4AA]/10 to-[#FF6B35]/10 blur-3xl" />
             <div className="relative h-full rounded-3xl glass overflow-hidden flex items-center justify-center">
               <div className="text-center p-8">
-                <div className="text-7xl md:text-8xl font-bold font-[family-name:var(--font-display)] text-gradient">
-                  BF
-                </div>
+                <Image
+                  src="/logo.png"
+                  alt="BrandForge Media"
+                  width={160}
+                  height={160}
+                  className="rounded-full mx-auto"
+                />
                 <p className="mt-4 text-sm text-[#A0A0B8]">Since 2019</p>
               </div>
               {/* Decorative elements */}
