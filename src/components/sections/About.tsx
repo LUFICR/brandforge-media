@@ -23,23 +23,18 @@ export function About() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="relative aspect-square max-w-[500px] mx-auto lg:mx-0"
+            className="relative aspect-square max-w-[500px] mx-auto lg:mx-0 flex items-center justify-center"
           >
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#6C63FF]/20 via-[#00D4AA]/10 to-[#FF6B35]/10 blur-3xl" />
-            <div className="relative h-full rounded-3xl glass overflow-hidden flex items-center justify-center">
-              <div className="text-center p-8">
-                <Image
-                  src="/logo.png"
-                  alt="BrandForge Media"
-                  width={160}
-                  height={160}
-                  className="rounded-full mx-auto"
-                />
-                <p className="mt-4 text-sm text-[#A0A0B8]">Since 2019</p>
-              </div>
-              {/* Decorative elements */}
-              <div className="absolute top-6 right-6 w-16 h-16 rounded-full bg-[#6C63FF]/10 blur-xl" />
-              <div className="absolute bottom-8 left-8 w-20 h-20 rounded-full bg-[#00D4AA]/10 blur-xl" />
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#6C63FF]/20 via-[#00D4AA]/10 to-[#FF6B35]/10 blur-3xl" />
+            <div className="relative text-center">
+              <Image
+                src="/logo.png"
+                alt="BrandForge Media"
+                width={200}
+                height={200}
+                className="rounded-full mx-auto"
+              />
+              <p className="mt-6 text-sm text-[#A0A0B8]">Since 2019</p>
             </div>
           </motion.div>
 
