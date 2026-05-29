@@ -16,7 +16,13 @@ export function ProcessTimeline() {
   const [ref, isInView] = useInView<HTMLElement>({ threshold: 0.1 });
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 lg:py-40 bg-[#12121A]/50">
+    <section ref={ref} className="relative py-24 md:py-32 lg:py-40">
+      {/* Smooth gradient transition */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-transparent to-[#12121A]/40" />
+        <div className="absolute inset-x-0 top-32 bottom-32 bg-[#12121A]/40" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-transparent to-[#12121A]/40" />
+      </div>
       {/* Parallax accents */}
       <div data-parallax="60" className="absolute top-10 right-20 w-[180px] h-[180px] rounded-full bg-[#6C63FF]/[0.03] blur-[80px]" />
       <div data-parallax="40" data-parallax-dir="down" className="absolute bottom-10 left-20 w-[150px] h-[150px] rounded-full bg-[#00D4AA]/[0.03] blur-[60px]" />

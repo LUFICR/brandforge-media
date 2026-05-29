@@ -9,7 +9,13 @@ export function Statistics() {
   const [ref, isInView] = useInView<HTMLElement>({ threshold: 0.3 });
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 bg-[#12121A]">
+    <section ref={ref} className="relative py-24 md:py-32">
+      {/* Smooth gradient transition instead of hard bg color */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-transparent to-[#12121A]/80" />
+        <div className="absolute inset-x-0 top-32 bottom-32 bg-[#12121A]/80" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-transparent to-[#12121A]/80" />
+      </div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(108,99,255,0.05)_0%,transparent_60%)]" />
       <div data-parallax="30" className="absolute top-0 left-1/3 w-[200px] h-[200px] rounded-full bg-[#FF6B35]/[0.03] blur-[80px]" />
 

@@ -50,8 +50,8 @@ export function Portfolio() {
                 visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
               }}
             >
-              <GlassCard hover="lift" className="group cursor-pointer overflow-hidden p-0">
-                <div className={`aspect-[4/3] bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
+              <GlassCard hover="lift" className="group cursor-pointer overflow-hidden p-0 !border-0">
+                <div className={`aspect-[4/3] bg-gradient-to-br ${project.gradient} relative overflow-hidden rounded-2xl`}>
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-end p-6">
                     <div className="translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                       <span className="text-xs font-medium text-white/70 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
