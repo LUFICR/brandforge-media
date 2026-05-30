@@ -30,7 +30,7 @@ export default function Home() {
       <div className="relative z-10">
         <Navbar />
         <Hero />
-        <div className="glow-line mx-auto max-w-4xl" />
+        <div className="glow-line mx-auto max-w-5xl" />
         <Services />
         <About />
         <MarqueeStats />

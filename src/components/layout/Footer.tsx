@@ -40,7 +40,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="relative pt-20 pb-8 overflow-hidden">
+    <footer className="relative pt-32 pb-8 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand/15 to-transparent" />
 
       {/* CTA Banner */}

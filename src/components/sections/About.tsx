@@ -40,7 +40,7 @@ export default function About() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6" ref={ref}>
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-32">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-28">
           {/* Left - Visual */}
           <motion.div
             initial={{ opacity: 0, x: -60 }}

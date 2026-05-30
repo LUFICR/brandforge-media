@@ -54,7 +54,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 36 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-5">
             Testimonials
@@ -71,7 +71,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="max-w-4xl mx-auto mb-10"
+          className="max-w-3xl mx-auto mb-10"
         >
           <div className="relative p-8 sm:p-12 rounded-3xl bg-dark-2 border border-white/5 overflow-hidden">
             <div className="absolute top-5 right-6 text-brand/[0.06]">

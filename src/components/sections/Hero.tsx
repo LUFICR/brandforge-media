@@ -276,12 +276,14 @@ export default function Hero() {
                   transformOrigin: "center center",
                 }}
               >
-                <img
-                  src="/hero-media.jpg"
-                  alt="BrandForge Media"
-                  className="w-full h-full object-cover hero-media-fallback"
+                <video
+                  src="/basic.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
                   style={{ transform: "scale(1.01)" }}
-                  loading="eager"
                 />
 
                 <div

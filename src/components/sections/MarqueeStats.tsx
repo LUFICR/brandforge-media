@@ -59,11 +59,11 @@ export default function MarqueeStats() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="relative py-20 overflow-hidden" ref={ref}>
+    <section className="relative py-32 overflow-hidden" ref={ref}>
       <MarqueeBand />
 
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}

@@ -75,7 +75,7 @@ export default function Process() {
         </motion.div>
 
         <div className="relative">
-          <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand/30 via-accent/20 to-transparent hidden sm:block" />
+          <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand/30 via-accent/20 to-transparent hidden sm:block lg:-translate-x-1/2" />
 
           <div className="space-y-12 lg:space-y-16">
             {steps.map((step, i) => (

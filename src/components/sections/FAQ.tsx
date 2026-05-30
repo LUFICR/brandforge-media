@@ -91,12 +91,12 @@ export default function FAQ() {
     <section className="relative py-32 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand/10 to-transparent" />
 
-      <div className="max-w-4xl mx-auto px-6" ref={ref}>
+      <div className="max-w-3xl mx-auto px-6" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 36 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-5">
             FAQ
