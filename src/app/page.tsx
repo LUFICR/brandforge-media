@@ -22,12 +22,12 @@ const Contact = dynamic(() => import("@/components/sections/Contact"));
 
 export default function Home() {
   return (
-    <div className="relative bg-dark min-h-screen">
+    <div className="relative bg-dark min-h-screen w-full overflow-x-hidden">
       <LoadingScreen />
       <Scene3D />
       <CursorGlow />
 
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         <Navbar />
         <Hero />
         <div className="glow-line mx-auto max-w-5xl" />

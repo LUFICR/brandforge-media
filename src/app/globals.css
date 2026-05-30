@@ -16,12 +16,6 @@
   --color-glass-border: rgba(255,255,255,0.08);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 html {
   scroll-behavior: smooth;
   background: #0a0a0f;
@@ -32,6 +26,10 @@ body {
   background: #0a0a0f;
   color: #e0e0e0;
   overflow-x: hidden;
+}
+
+section {
+  width: 100%;
 }
 
 ::-webkit-scrollbar { width: 6px; }
