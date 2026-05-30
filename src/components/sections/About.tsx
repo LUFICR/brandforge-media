@@ -46,9 +46,9 @@ export default function About() {
             initial={{ opacity: 0, x: -60 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
+            className="relative flex items-center justify-center"
           >
-            <div className="relative aspect-square max-w-md mx-auto">
+            <div className="relative aspect-square w-full max-w-sm mx-auto">
               <div className="absolute inset-0 rounded-3xl border border-brand/10 animate-morph" />
               <div className="absolute inset-4 rounded-3xl bg-dark-2 border border-white/[0.04] overflow-hidden">
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
@@ -84,14 +84,14 @@ export default function About() {
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ repeat: Infinity, duration: 3 }}
-                className="absolute -top-4 -right-4 px-4 py-2 rounded-xl bg-dark-2 border border-white/[0.06] text-sm text-white font-medium"
+                className="absolute top-2 right-2 px-4 py-2 rounded-xl bg-dark-2 border border-white/[0.06] text-sm text-white font-medium"
               >
                 Top Rated Agency
               </motion.div>
               <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ repeat: Infinity, duration: 3.5 }}
-                className="absolute -bottom-4 -left-4 px-4 py-2 rounded-xl bg-dark-2 border border-white/[0.06] text-sm text-accent font-medium"
+                className="absolute bottom-2 left-2 px-4 py-2 rounded-xl bg-dark-2 border border-white/[0.06] text-sm text-accent font-medium"
               >
                 100+ Happy Clients
               </motion.div>

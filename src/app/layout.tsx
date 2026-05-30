@@ -82,7 +82,7 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} dark`}
     >
-      <body className="min-h-dvh bg-background text-foreground font-sans antialiased">
+      <body className="min-h-dvh bg-dark text-white font-sans antialiased">
         <GoogleAnalytics />
         <SentryInit />
         <JsonLd />

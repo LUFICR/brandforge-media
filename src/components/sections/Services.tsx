@@ -93,16 +93,16 @@ export default function Services() {
               transition={{ duration: 0.6, delay: 0.1 * i }}
               className="group relative"
             >
-              <div className="relative h-full p-8 rounded-2xl bg-dark-2 border border-white/5 hover:border-brand/20 transition-all duration-500 overflow-hidden cursor-pointer">
+              <div className="relative h-full p-8 rounded-2xl bg-dark-2 border border-white/5 hover:border-brand/20 transition-all duration-500 overflow-hidden cursor-pointer text-center">
                 <div
-                  className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} p-0.5 mb-6`}
+                  className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} p-0.5 mb-6 mx-auto`}
                 >
                   <div className="w-full h-full rounded-xl bg-dark-2 flex items-center justify-center">
                     <service.icon className="w-6 h-6 text-white" />
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-white mb-3 font-[family-name:var(--font-display)] flex items-center gap-2">
+                <h3 className="text-xl font-bold text-white mb-3 font-[family-name:var(--font-display)] flex items-center justify-center gap-2">
                   {service.title}
                   <ArrowUpRight className="w-4 h-4 text-gray-600 group-hover:text-brand-light group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
                 </h3>
