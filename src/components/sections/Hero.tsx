@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Sparkles, Zap } from "lucide-react";
+import { ChevronDown, Sparkles } from "lucide-react";
 
 const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -68,7 +68,6 @@ export default function Hero() {
   const bgRef = useRef<HTMLDivElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const badgeRef = useRef<HTMLDivElement>(null);
   const titleLine1Ref = useRef<HTMLDivElement>(null);
   const titleLine2Ref = useRef<HTMLDivElement>(null);
   const titleLine3Ref = useRef<HTMLDivElement>(null);
@@ -116,10 +115,6 @@ export default function Hero() {
 
     if (overlayRef.current) {
       overlayRef.current.style.opacity = String(0.55 - p * 0.35);
-    }
-
-    if (badgeRef.current) {
-      badgeRef.current.style.opacity = String(p < 0.35 ? 1 : Math.max(0, 1 - (p - 0.35) * 10));
     }
 
     const shift = p * (mob ? 120 : 100);
@@ -295,16 +290,6 @@ export default function Hero() {
                   style={{ opacity: 0.55 }}
                 />
 
-                <div
-                  ref={badgeRef}
-                  className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.06] z-10 will-change-[opacity]"
-                  style={{ opacity: 1 }}
-                >
-                  <Zap className="w-3 h-3 text-accent" />
-                  <span className="text-[11px] text-gray-300 font-medium tracking-wide whitespace-nowrap">
-                    Our Showreel
-                  </span>
-                </div>
               </div>
 
               <div className="flex items-center justify-center text-center w-full relative z-10 flex-col gap-1 pointer-events-none select-none">
