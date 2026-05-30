@@ -1,121 +1,148 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import { GlassCard } from "@/components/shared/GlassCard";
-import { useInView } from "@/hooks/useInView";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState } from "react";
+import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
 
 const testimonials = [
   {
-    quote: "BrandForge Media transformed our online presence completely. Our engagement grew 300% in just 3 months.",
+    quote:
+      "BrandForge Media transformed our online presence completely. Our engagement grew 300% in just 3 months. They truly understand digital marketing.",
     name: "Rahul Sharma",
-    business: "TechStart Solutions",
+    role: "Founder, TechStart Solutions",
     rating: 5,
   },
   {
-    quote: "The website they designed for us is stunning. We've seen a 5x increase in leads since launch.",
+    quote:
+      "The team at BrandForge delivered beyond our expectations. Our website redesign led to a 250% increase in conversions. Highly recommended!",
     name: "Priya Patel",
-    business: "Luxe Interiors",
+    role: "CEO, Luxe Boutique",
     rating: 5,
   },
   {
-    quote: "Professional, creative, and results-driven. They truly understand digital marketing.",
-    name: "Amit Verma",
-    business: "FoodieHub Restaurant",
+    quote:
+      "Working with BrandForge was a game-changer. Their social media strategy helped us reach 50K followers in just 6 months.",
+    name: "Amit Kumar",
+    role: "Director, FoodieHub",
     rating: 5,
   },
   {
-    quote: "Their branding work gave our startup the premium identity we needed to attract investors.",
-    name: "Sneha Gupta",
-    business: "CloudSync Enterprise",
+    quote:
+      "Professional, creative, and results-driven. BrandForge Media helped us establish a strong brand identity from scratch.",
+    name: "Sneha Reddy",
+    role: "Co-founder, HealthFirst",
     rating: 5,
   },
 ];
 
-export function Testimonials() {
-  const [ref, isInView] = useInView<HTMLElement>({ threshold: 0.1 });
-  const [current, setCurrent] = useState(0);
+export default function Testimonials() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [idx, setIdx] = useState(0);
 
-  const next = () => setCurrent((c) => (c + 1) % testimonials.length);
-  const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
+  const next = () => setIdx((i) => (i + 1) % testimonials.length);
+  const prev = () =>
+    setIdx((i) => (i - 1 + testimonials.length) % testimonials.length);
+  const t = testimonials[idx];
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 lg:py-40">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        <SectionHeading
-          overline="Testimonials"
-          title="What Our Clients Say"
-          description="Real results from real businesses we've helped grow"
-        />
+    <section className="relative py-32 overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
+
+      <div className="max-w-7xl mx-auto px-6" ref={ref}>
+        <motion.div
+          initial={{ opacity: 0, y: 36 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-14"
+        >
+          <span className="inline-block px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-5">
+            Testimonials
+          </span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black font-[family-name:var(--font-display)] text-white mb-4">
+            What Our Clients <span className="text-gradient">Say</span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-xl mx-auto">
+            Real results from real businesses we&apos;ve helped grow.
+          </p>
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="mt-16 max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="max-w-4xl mx-auto mb-10"
         >
-          <div className="relative">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                <GlassCard variant="medium" hover="none" className="text-center p-8 md:p-10">
-                  <div className="flex justify-center gap-1 mb-6">
-                    {Array.from({ length: testimonials[current].rating }).map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-[#FF6B35] text-[#FF6B35]" />
-                    ))}
-                  </div>
-                  <blockquote className="text-lg md:text-xl text-white leading-relaxed italic">
-                    &ldquo;{testimonials[current].quote}&rdquo;
-                  </blockquote>
-                  <div className="mt-6">
-                    <p className="text-sm font-semibold text-white">
-                      {testimonials[current].name}
-                    </p>
-                    <p className="text-xs text-[#A0A0B8] mt-1">
-                      {testimonials[current].business}
-                    </p>
-                  </div>
-                </GlassCard>
-              </motion.div>
-            </AnimatePresence>
+          <div className="relative p-8 sm:p-12 rounded-3xl bg-dark-2 border border-white/5 overflow-hidden">
+            <div className="absolute top-5 right-6 text-brand/[0.06]">
+              <Quote className="w-20 h-20" />
+            </div>
 
-            {/* Navigation */}
-            <div className="flex items-center justify-center gap-4 mt-8">
-              <button
-                onClick={prev}
-                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:border-white/20 transition-all"
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-
-              <div className="flex gap-2">
-                {testimonials.map((_, i) => (
-                  <button
+            <div className="relative min-h-[220px] sm:min-h-[200px]">
+              <div className="flex gap-1 mb-5">
+                {Array.from({ length: t.rating }).map((_, i) => (
+                  <Star
                     key={i}
-                    onClick={() => setCurrent(i)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      i === current ? "bg-[#6C63FF] w-6" : "bg-white/20"
-                    }`}
-                    aria-label={`Go to testimonial ${i + 1}`}
+                    className="w-4 h-4 fill-yellow-400 text-yellow-400"
                   />
                 ))}
               </div>
 
-              <button
-                onClick={next}
-                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:border-white/20 transition-all"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.35 }}
+                >
+                  <blockquote className="text-lg sm:text-2xl text-white font-medium leading-relaxed mb-8 font-[family-name:var(--font-display)]">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+
+                  <div className="flex items-center gap-4">
+                    <div className="w-11 h-11 rounded-full bg-gradient-to-br from-brand to-accent flex items-center justify-center text-white font-bold text-base">
+                      {t.name[0]}
+                    </div>
+                    <div>
+                      <div className="font-bold text-white text-sm">
+                        {t.name}
+                      </div>
+                      <div className="text-xs text-gray-500">{t.role}</div>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            <div className="flex items-center justify-between mt-6 pt-5 border-t border-white/5">
+              <div className="flex gap-2">
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setIdx(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === idx
+                        ? "w-6 bg-brand"
+                        : "w-2 bg-white/15 hover:bg-white/30"
+                    }`}
+                  />
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={prev}
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors"
+                >
+                  <ChevronLeft className="w-4 h-4 text-white" />
+                </button>
+                <button
+                  onClick={next}
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors"
+                >
+                  <ChevronRight className="w-4 h-4 text-white" />
+                </button>
+              </div>
             </div>
           </div>
         </motion.div>

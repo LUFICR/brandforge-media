@@ -1,101 +1,137 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import { GlassCard } from "@/components/shared/GlassCard";
-import { SERVICES } from "@/lib/constants";
-import { useInView } from "@/hooks/useInView";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import {
+  Palette,
+  Globe,
   Share2,
-  Monitor,
-  Film,
-  Sparkles,
-  TrendingUp,
-  Search,
-  type LucideIcon,
+  BarChart3,
+  Megaphone,
+  Camera,
+  ArrowUpRight,
 } from "lucide-react";
 
-const iconMap: Record<string, LucideIcon> = {
-  share2: Share2,
-  monitor: Monitor,
-  film: Film,
-  sparkles: Sparkles,
-  trendingUp: TrendingUp,
-  search: Search,
-};
+const services = [
+  {
+    icon: Palette,
+    title: "Brand Identity",
+    description:
+      "Complete brand identity design including logo, colors, typography & brand guidelines that make you unforgettable.",
+    color: "from-violet-500 to-purple-600",
+  },
+  {
+    icon: Globe,
+    title: "Web Design & Dev",
+    description:
+      "Premium, responsive websites crafted with cutting-edge technology to convert visitors into loyal customers.",
+    color: "from-cyan-500 to-blue-600",
+  },
+  {
+    icon: Share2,
+    title: "Social Media",
+    description:
+      "Strategic social media management that builds communities, drives engagement, and grows your audience.",
+    color: "from-pink-500 to-rose-600",
+  },
+  {
+    icon: BarChart3,
+    title: "SEO & Analytics",
+    description:
+      "Data-driven SEO strategies that boost rankings, increase traffic, and deliver measurable ROI.",
+    color: "from-emerald-500 to-green-600",
+  },
+  {
+    icon: Megaphone,
+    title: "Paid Advertising",
+    description:
+      "High-performing ad campaigns across Google, Meta & more — optimized for maximum conversions.",
+    color: "from-orange-500 to-amber-600",
+  },
+  {
+    icon: Camera,
+    title: "Content Creation",
+    description:
+      "Professional content production — from photography to video and copywriting that tells your story.",
+    color: "from-indigo-500 to-violet-600",
+  },
+];
 
-export function Services() {
-  const [ref, isInView] = useInView<HTMLElement>({ threshold: 0.1 });
+export default function Services() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="services" ref={ref} className="relative py-24 md:py-32 lg:py-40">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-16 items-start">
-          <div className="lg:sticky lg:top-32">
-            <SectionHeading
-              overline="What We Do"
-              title="Services That Drive Growth"
-              description="From basic setup to complete business branding — we handle everything professionally."
-              align="left"
-            />
-            <motion.a
-              href="#contact"
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.6 }}
-              className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-[#6C63FF] hover:text-[#00D4AA] transition-colors"
-            >
-              Get Free Consultation
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </motion.a>
-          </div>
+    <section id="services" className="relative py-32 overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand/20 to-transparent" />
 
-          <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.1 },
-              },
-            }}
-            className="grid sm:grid-cols-2 gap-4"
-          >
-            {SERVICES.map((service) => {
-              const Icon = iconMap[service.icon];
-              return (
-                <motion.div
-                  key={service.title}
-                  variants={{
-                    hidden: { opacity: 0, y: 30 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-                  }}
+      <div className="max-w-7xl mx-auto px-6" ref={ref}>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-20"
+        >
+          <span className="inline-block px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand-light text-sm font-medium mb-6">
+            What We Do
+          </span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black font-[family-name:var(--font-display)] text-white mb-6">
+            Services That Drive <span className="text-gradient">Growth</span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            From basic setup to complete business branding — we handle everything
+            professionally.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, i) => (
+            <motion.div
+              key={service.title}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 * i }}
+              className="group relative"
+            >
+              <div className="relative h-full p-8 rounded-2xl bg-dark-2 border border-white/5 hover:border-brand/20 transition-all duration-500 overflow-hidden cursor-pointer">
+                <div
+                  className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} p-0.5 mb-6`}
                 >
-                  <GlassCard className="h-full group cursor-pointer hover:border-[#6C63FF]/30 transition-colors duration-300">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#6C63FF]/20 to-[#00D4AA]/20 flex items-center justify-center mb-4">
-                      <Icon className="w-6 h-6 text-[#6C63FF]" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm text-[#A0A0B8] leading-relaxed">
-                      {service.description}
-                    </p>
-                    <div className="mt-4 flex items-center gap-1 text-xs text-[#6C63FF] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      Learn more
-                      <svg className="w-3 h-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </GlassCard>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+                  <div className="w-full h-full rounded-xl bg-dark-2 flex items-center justify-center">
+                    <service.icon className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+
+                <h3 className="text-xl font-bold text-white mb-3 font-[family-name:var(--font-display)] flex items-center gap-2">
+                  {service.title}
+                  <ArrowUpRight className="w-4 h-4 text-gray-600 group-hover:text-brand-light group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+                </h3>
+                <p className="text-gray-400 leading-relaxed text-sm">
+                  {service.description}
+                </p>
+
+                <div
+                  className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${service.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}
+                />
+              </div>
+            </motion.div>
+          ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="text-center mt-16"
+        >
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-brand to-brand-dark text-white font-bold rounded-full hover:shadow-lg hover:shadow-brand/20 transition-all"
+          >
+            Get Free Consultation
+            <ArrowUpRight className="w-5 h-5" />
+          </a>
+        </motion.div>
       </div>
     </section>
   );

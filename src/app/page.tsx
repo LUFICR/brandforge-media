@@ -1,37 +1,46 @@
-import dynamic from "next/dynamic";
-import { Navbar } from "@/components/layout/Navbar";
-import { Hero } from "@/components/sections/Hero";
-import { Services } from "@/components/sections/Services";
-import { Footer } from "@/components/layout/Footer";
-import { FloatingCTA } from "@/components/shared/FloatingCTA";
+"use client";
 
-const About = dynamic(() => import("@/components/sections/About").then((m) => m.About));
-const WhyChooseUs = dynamic(() => import("@/components/sections/WhyChooseUs").then((m) => m.WhyChooseUs));
-const Portfolio = dynamic(() => import("@/components/sections/Portfolio").then((m) => m.Portfolio));
-const Statistics = dynamic(() => import("@/components/sections/Statistics").then((m) => m.Statistics));
-const Testimonials = dynamic(() => import("@/components/sections/Testimonials").then((m) => m.Testimonials));
-const ProcessTimeline = dynamic(() => import("@/components/sections/ProcessTimeline").then((m) => m.ProcessTimeline));
-const FAQ = dynamic(() => import("@/components/sections/FAQ").then((m) => m.FAQ));
-const Contact = dynamic(() => import("@/components/sections/Contact").then((m) => m.Contact));
+import dynamic from "next/dynamic";
+import Navbar from "@/components/layout/Navbar";
+import Hero from "@/components/sections/Hero";
+import Services from "@/components/sections/Services";
+import About from "@/components/sections/About";
+import Footer from "@/components/layout/Footer";
+import LoadingScreen from "@/components/shared/LoadingScreen";
+import CursorGlow from "@/components/shared/CursorGlow";
+
+const Scene3D = dynamic(
+  () => import("@/components/three/Scene3D"),
+  { ssr: false }
+);
+const MarqueeStats = dynamic(() => import("@/components/sections/MarqueeStats"));
+const Portfolio = dynamic(() => import("@/components/sections/Portfolio"));
+const Process = dynamic(() => import("@/components/sections/ProcessTimeline"));
+const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
+const FAQ = dynamic(() => import("@/components/sections/FAQ"));
+const Contact = dynamic(() => import("@/components/sections/Contact"));
 
 export default function Home() {
   return (
-    <>
-      <Navbar />
-      <main>
+    <div className="relative bg-dark min-h-screen">
+      <LoadingScreen />
+      <Scene3D />
+      <CursorGlow />
+
+      <div className="relative z-10">
+        <Navbar />
         <Hero />
+        <div className="glow-line mx-auto max-w-4xl" />
         <Services />
         <About />
-        <WhyChooseUs />
+        <MarqueeStats />
         <Portfolio />
-        <Statistics />
+        <Process />
         <Testimonials />
-        <ProcessTimeline />
         <FAQ />
         <Contact />
-      </main>
-      <Footer />
-      <FloatingCTA />
-    </>
+        <Footer />
+      </div>
+    </div>
   );
 }
