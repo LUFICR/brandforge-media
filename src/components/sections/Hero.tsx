@@ -110,6 +110,8 @@ export default function Hero() {
       const radius = Math.max(2, 20 - p * 18);
       mediaRef.current.style.transform = `translate3d(-50%, -50%, 0) scale(${scaleX}, ${scaleY})`;
       mediaRef.current.style.borderRadius = `${radius / scaleX}px ${radius / scaleY}px`;
+      const mediaOpacity = clamp(p * 4, 0, 1);
+      mediaRef.current.style.opacity = String(mediaOpacity);
     }
 
     if (overlayRef.current) {
@@ -274,6 +276,7 @@ export default function Hero() {
                   transform: "translate3d(-50%, -50%, 0) scale(1, 1)",
                   borderRadius: "20px",
                   transformOrigin: "center center",
+                  opacity: 0,
                 }}
               >
                 <video
@@ -304,7 +307,7 @@ export default function Hero() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-center text-center w-full relative z-10 flex-col gap-1 mix-blend-difference pointer-events-none select-none">
+              <div className="flex items-center justify-center text-center w-full relative z-10 flex-col gap-1 pointer-events-none select-none">
                 <div
                   ref={titleLine1Ref}
                   className="will-change-transform"
