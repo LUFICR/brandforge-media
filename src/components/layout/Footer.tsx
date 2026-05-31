@@ -115,11 +115,21 @@ export default function Footer({ content }: { content: SiteContent }) {
           <p className="text-sm text-gray-600">
             {footer.copyright}
           </p>
-          <p className="text-sm text-gray-600 flex items-center gap-1">
-            Crafted with{" "}
-            <Heart className="w-3 h-3 text-pink-500 fill-pink-500" /> by
-            BrandForge Media
-          </p>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://brandforge-admin.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-gray-600 hover:text-brand-light transition-colors"
+            >
+              Admin
+            </a>
+            <p className="text-sm text-gray-600 flex items-center gap-1">
+              Crafted with{" "}
+              <Heart className="w-3 h-3 text-pink-500 fill-pink-500" /> by
+              BrandForge Media
+            </p>
+          </div>
         </div>
       </div>
     </footer>
