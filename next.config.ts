@@ -42,8 +42,20 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/((?!api/cms).*)",
+        source: "/((?!api/cms|admin).*)",
         headers: securityHeaders,
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/admin",
+        destination: "https://brandforge-admin.vercel.app/",
+      },
+      {
+        source: "/admin/:path*",
+        destination: "https://brandforge-admin.vercel.app/:path*",
       },
     ];
   },

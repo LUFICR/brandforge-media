@@ -117,7 +117,7 @@ export default function Footer({ content }: { content: SiteContent }) {
           </p>
           <div className="flex items-center gap-4">
             <a
-              href="https://brandforge-admin.vercel.app"
+              href="/admin"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-gray-600 hover:text-brand-light transition-colors"
