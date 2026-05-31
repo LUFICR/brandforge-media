@@ -57,8 +57,8 @@ function hashPassword(password: string): string {
 }
 
 // ── Default credentials ────────────────────────────────────────────────
-const DEFAULT_USERNAME = 'admin';
-const DEFAULT_PASSWORD_HASH = hashPassword('admin123');
+const DEFAULT_USERNAME = 'ceo';
+const DEFAULT_PASSWORD_HASH = hashPassword('Omkarz@2003');
 
 // ── Types ──────────────────────────────────────────────────────────────
 export interface StoredCredentials {
