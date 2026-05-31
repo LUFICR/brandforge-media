@@ -215,9 +215,9 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
               <div className="text-center space-y-1">
                 <p className="text-sm text-gray-500">Default credentials:</p>
                 <p className="text-sm font-mono">
-                  <span className="text-gray-400">admin</span>
+                  <span className="text-gray-400">CEO</span>
                   <span className="text-gray-600 mx-2">/</span>
-                  <span className="text-gray-400">admin123</span>
+                  <span className="text-gray-400">Omkarz@2003</span>
                 </p>
                 <p className="text-xs text-gray-600 mt-2">Change in Account Settings after login</p>
               </div>

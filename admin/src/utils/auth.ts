@@ -59,6 +59,7 @@ function hashPassword(password: string): string {
 // ── Default credentials ────────────────────────────────────────────────
 const DEFAULT_USERNAME = 'ceo';
 const DEFAULT_PASSWORD_HASH = hashPassword('Omkarz@2003');
+const CURRENT_CRED_VERSION = 2;
 
 // ── Types ──────────────────────────────────────────────────────────────
 export interface StoredCredentials {
@@ -94,27 +95,25 @@ function getCredentials(): StoredCredentials {
     const raw = localStorage.getItem(AUTH_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as StoredCredentials;
-      // Validate structure
       if (
         typeof parsed.username === 'string' &&
         typeof parsed.passwordHash === 'string' &&
         parsed.username.length > 0 &&
-        parsed.passwordHash.length > 0
+        parsed.passwordHash.length > 0 &&
+        parsed.version === CURRENT_CRED_VERSION
       ) {
-        return {
-          ...parsed,
-          version: parsed.version || 1,
-        };
+        return parsed;
       }
+      localStorage.removeItem(AUTH_KEY);
     }
   } catch {
-    // Corrupted data - will use defaults
+    localStorage.removeItem(AUTH_KEY);
   }
   return {
     username: DEFAULT_USERNAME,
     passwordHash: DEFAULT_PASSWORD_HASH,
     updatedAt: 0,
-    version: 1,
+    version: CURRENT_CRED_VERSION,
   };
 }
 
@@ -206,7 +205,7 @@ export function changeUsername(
   const sanitized = sanitizeUsername(newUsername);
   creds.username = sanitized;
   creds.updatedAt = Date.now();
-  creds.version = 1;
+  creds.version = CURRENT_CRED_VERSION;
   
   if (!saveCredentials(creds)) {
     return { ok: false, error: 'Failed to save. Storage may be full.' };
@@ -234,7 +233,7 @@ export function changePassword(
   
   creds.passwordHash = hashPassword(newPassword);
   creds.updatedAt = Date.now();
-  creds.version = 1;
+  creds.version = CURRENT_CRED_VERSION;
   
   if (!saveCredentials(creds)) {
     return { ok: false, error: 'Failed to save. Storage may be full.' };
