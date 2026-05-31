@@ -14,7 +14,7 @@ export function getPublishConfig(): PublishConfig {
     const raw = localStorage.getItem(PUBLISH_CONFIG_KEY);
     if (raw) return JSON.parse(raw);
   } catch { /* ignore */ }
-  return { websiteUrl: '', apiKey: '' };
+  return { websiteUrl: 'https://brandforge-media.vercel.app', apiKey: 'brandforge-cms-2024-secret' };
 }
 
 export function savePublishConfig(config: PublishConfig): void {
