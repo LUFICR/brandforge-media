@@ -10,26 +10,7 @@ import {
   Users,
   Rss,
 } from "lucide-react";
-
-const footerLinks = {
-  Services: [
-    "Brand Identity",
-    "Web Design",
-    "Social Media",
-    "SEO",
-    "Paid Ads",
-    "Content Creation",
-  ],
-  Company: [
-    "About Us",
-    "Portfolio",
-    "Process",
-    "Testimonials",
-    "Careers",
-    "Blog",
-  ],
-  Support: ["Contact", "FAQ", "Privacy Policy", "Terms of Service"],
-};
+import { SiteContent } from "@/data/siteContent";
 
 const socialLinks = [
   { icon: Globe, href: "#", label: "Website" },
@@ -38,7 +19,9 @@ const socialLinks = [
   { icon: Rss, href: "#", label: "Blog" },
 ];
 
-export default function Footer() {
+export default function Footer({ content }: { content: SiteContent }) {
+  const { footer } = content;
+
   return (
     <footer className="relative pt-32 pb-8 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand/15 to-transparent" />
@@ -57,11 +40,10 @@ export default function Footer() {
 
           <div className="relative z-10 text-center">
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black font-[family-name:var(--font-display)] text-white mb-6">
-              Ready to Dominate Online?
+              {footer.ctaTitle}
             </h2>
             <p className="text-white/80 text-lg max-w-xl mx-auto mb-8">
-              Let&apos;s transform your digital presence and build a brand that
-              stands out. Get started today — it&apos;s free to consult.
+              {footer.ctaSubtitle}
             </p>
             <motion.a
               href="#contact"
@@ -69,7 +51,7 @@ export default function Footer() {
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-dark font-bold rounded-full text-lg shadow-xl hover:shadow-2xl transition-all"
             >
-              Start Your Project
+              {footer.ctaButton}
               <ArrowUpRight className="w-5 h-5" />
             </motion.a>
           </div>
@@ -86,12 +68,11 @@ export default function Footer() {
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold font-[family-name:var(--font-display)] text-white">
-                BrandForge<span className="text-brand-light">.media</span>
+                {footer.brandName}<span className="text-brand-light">{footer.brandTagline}</span>
               </span>
             </a>
             <p className="text-gray-400 leading-relaxed mb-6 max-w-sm">
-              Premium digital marketing agency transforming businesses into
-              powerful brands since 2019.
+              {footer.description}
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -108,9 +89,9 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          {Object.entries(footerLinks).map(([title, links]) => (
+          {Object.entries(footer.links).map(([title, links]) => (
             <div key={title}>
-              <h3 className="text-white font-bold mb-6 font-[family-name:var(--font-display)]">
+              <h3 className="text-white font-bold mb-6 font-[family-name:var(--font-display)] capitalize">
                 {title}
               </h3>
               <ul className="space-y-3">
@@ -132,7 +113,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-600">
-            © 2025 BrandForge Media. All rights reserved.
+            {footer.copyright}
           </p>
           <p className="text-sm text-gray-600 flex items-center gap-1">
             Crafted with{" "}

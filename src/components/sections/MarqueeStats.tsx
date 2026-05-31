@@ -2,34 +2,9 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { SiteContent } from "@/data/siteContent";
 
-const stats = [
-  { value: "100+", label: "Happy Clients", icon: "😊" },
-  { value: "500+", label: "Projects Completed", icon: "🚀" },
-  { value: "5+", label: "Years Experience", icon: "⏰" },
-  { value: "98%", label: "Client Satisfaction", icon: "⭐" },
-];
-
-const marqueeItems = [
-  "BRANDING",
-  "✦",
-  "WEB DESIGN",
-  "✦",
-  "SOCIAL MEDIA",
-  "✦",
-  "SEO",
-  "✦",
-  "CONTENT",
-  "✦",
-  "STRATEGY",
-  "✦",
-  "GROWTH",
-  "✦",
-  "ADS",
-  "✦",
-];
-
-function MarqueeBand() {
+function MarqueeBand({ items }: { items: string[] }) {
   return (
     <div className="relative py-6 border-y border-white/[0.03] mb-20 overflow-hidden">
       <div className="flex">
@@ -42,7 +17,7 @@ function MarqueeBand() {
               x: { repeat: Infinity, duration: 30, ease: "linear" },
             }}
           >
-            {marqueeItems.map((word, i) => (
+            {items.map((word, i) => (
               <span key={i} className={word === "✦" ? "text-brand/[0.06]" : ""}>
                 {word}
               </span>
@@ -54,17 +29,18 @@ function MarqueeBand() {
   );
 }
 
-export default function MarqueeStats() {
+export default function MarqueeStats({ content }: { content: SiteContent }) {
+  const { marquee } = content;
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section className="relative py-32 overflow-hidden" ref={ref}>
-      <MarqueeBand />
+      <MarqueeBand items={marquee.items} />
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, i) => (
+          {marquee.stats.map((stat, i) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 24 }}

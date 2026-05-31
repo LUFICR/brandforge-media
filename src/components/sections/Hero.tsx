@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Sparkles } from "lucide-react";
+import { SiteContent } from "@/data/siteContent";
 
 const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -57,7 +58,9 @@ function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
   );
 }
 
-export default function Hero() {
+export default function Hero({ content }: { content: SiteContent }) {
+  const { hero } = content;
+
   const progressTarget = useRef(0);
   const progressRendered = useRef(0);
   const rafId = useRef(0);
@@ -235,7 +238,7 @@ export default function Hero() {
             style={{ opacity: 1 }}
           >
             <img
-              src="/hero-bg.jpg"
+              src={hero.backgroundImage}
               alt=""
               className="w-full h-full object-cover hero-bg-fallback"
               loading="eager"
@@ -275,7 +278,7 @@ export default function Hero() {
                 }}
               >
                 <video
-                  src="/basic.mp4"
+                  src={hero.videoUrl}
                   autoPlay
                   loop
                   muted
@@ -289,7 +292,6 @@ export default function Hero() {
                   className="absolute inset-0 bg-dark/60 will-change-[opacity]"
                   style={{ opacity: 0.55 }}
                 />
-
               </div>
 
               <div className="flex items-center justify-center text-center w-full relative z-10 flex-col gap-1 pointer-events-none select-none">
@@ -299,7 +301,7 @@ export default function Hero() {
                   style={{ transform: "translate3d(0, 0, 0)" }}
                 >
                   <h1 className="text-5xl md:text-7xl lg:text-8xl xl:text-[8.5rem] font-black font-[family-name:var(--font-display)] tracking-tighter text-white leading-[0.9]">
-                    We Build
+                    {hero.titleLine1}
                   </h1>
                 </div>
 
@@ -309,7 +311,7 @@ export default function Hero() {
                   style={{ transform: "translate3d(0, 0, 0)" }}
                 >
                   <h1 className="text-5xl md:text-7xl lg:text-8xl xl:text-[8.5rem] font-black font-[family-name:var(--font-display)] tracking-tighter leading-[0.9]">
-                    <span className="text-shine-sweep">Brands That</span>
+                    <span className="text-shine-sweep">{hero.titleLine2}</span>
                   </h1>
                 </div>
 
@@ -319,7 +321,7 @@ export default function Hero() {
                   style={{ opacity: 1 }}
                 >
                   <h1 className="text-5xl md:text-7xl lg:text-8xl xl:text-[8.5rem] font-black font-[family-name:var(--font-display)] tracking-tighter text-gradient-animated leading-[0.9]">
-                    Dominate
+                    {hero.titleLine3}
                   </h1>
                 </div>
               </div>
@@ -330,11 +332,11 @@ export default function Hero() {
                 style={{ opacity: 1 }}
               >
                 <p className="text-gray-400 text-sm font-medium tracking-wide">
-                  Premium Digital Marketing Agency
+                  {content.siteDescription}
                 </p>
                 <div className="flex items-center gap-2 text-gray-500 text-xs hero-bounce-hint">
                   <ChevronDown className="w-4 h-4 text-brand-light" />
-                  <span className="tracking-[0.2em] uppercase">Scroll to explore</span>
+                  <span className="tracking-[0.2em] uppercase">{hero.scrollText}</span>
                   <ChevronDown className="w-4 h-4 text-brand-light" />
                 </div>
               </div>
@@ -344,12 +346,7 @@ export default function Hero() {
                 className="absolute z-[3] bottom-6 left-1/2 flex items-center gap-8 sm:gap-14 will-change-transform"
                 style={{ opacity: 0, transform: "translate3d(-50%, 16px, 0)" }}
               >
-                {([
-                  { value: 100, suffix: "+", label: "Clients" },
-                  { value: 500, suffix: "+", label: "Projects" },
-                  { value: 5, suffix: "+", label: "Years" },
-                  { value: 98, suffix: "%", label: "Satisfaction" },
-                ] as const).map((s) => (
+                {hero.stats.map((s) => (
                   <div key={s.label} className="text-center">
                     <div className="text-xl sm:text-2xl font-black font-[family-name:var(--font-display)] text-white">
                       <Counter target={s.value} suffix={s.suffix} />
@@ -372,12 +369,13 @@ export default function Hero() {
                 >
                   <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6">
                     <Sparkles className="w-3.5 h-3.5 text-accent" />
-                    <span className="text-xs text-gray-400 font-medium tracking-wide">Since 2019</span>
+                    <span className="text-xs text-gray-400 font-medium tracking-wide">{hero.tagline}</span>
                   </div>
 
                   <p className="text-lg sm:text-xl text-gray-400 max-w-2xl leading-relaxed mb-8">
-                    From social media to complete digital presence — premium solutions for ambitious businesses that demand{" "}
-                    <span className="text-white font-medium">excellence</span>.
+                    {hero.subtitle.split("excellence")[0]}
+                    <span className="text-white font-medium">excellence</span>
+                    {hero.subtitle.split("excellence")[1] || "."}
                   </p>
 
                   <div className="flex flex-col sm:flex-row items-center gap-4">
@@ -386,7 +384,7 @@ export default function Hero() {
                       className="group relative px-8 py-3.5 bg-gradient-to-r from-brand via-purple-600 to-brand-dark text-white font-bold rounded-full text-base overflow-hidden"
                     >
                       <span className="relative z-10 flex items-center gap-2">
-                        Start Your Project →
+                        {hero.ctaPrimary}
                       </span>
                       <div className="absolute inset-0 bg-gradient-to-r from-accent to-brand opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </a>
@@ -394,7 +392,7 @@ export default function Hero() {
                       href="#services"
                       className="px-8 py-3.5 text-gray-300 font-semibold rounded-full border border-white/[0.08] hover:border-white/[0.15] hover:text-white transition-all text-base"
                     >
-                      Explore Services
+                      {hero.ctaSecondary}
                     </a>
                   </div>
                 </motion.div>

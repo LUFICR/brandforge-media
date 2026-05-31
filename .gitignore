@@ -40,4 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
+# CMS content (managed by admin dashboard)
+src/data/content.json
+
+# admin dashboard node_modules
+/admin/node_modules

@@ -2,11 +2,20 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Send, Mail, Phone, MapPin, Clock, MessageCircle } from "lucide-react";
+import { Send, Mail, Phone, MapPin, Clock, MessageCircle, LucideIcon } from "lucide-react";
+import { SiteContent } from "@/data/siteContent";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
-export default function Contact() {
+const iconMap: Record<string, LucideIcon> = {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+};
+
+export default function Contact({ content }: { content: SiteContent }) {
+  const { contact } = content;
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [formState, setFormState] = useState({
@@ -46,33 +55,6 @@ export default function Contact() {
     }
   };
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "hello@brandforgemedia.com",
-      color: "text-violet-400",
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+91 93112 67085",
-      color: "text-emerald-400",
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "India (Serving Worldwide)",
-      color: "text-pink-400",
-    },
-    {
-      icon: Clock,
-      label: "Response Time",
-      value: "Within 2 hours",
-      color: "text-amber-400",
-    },
-  ];
-
   return (
     <section id="contact" className="relative py-32 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
@@ -85,14 +67,13 @@ export default function Contact() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium mb-6">
-            Get In Touch
+            {contact.badge}
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black font-[family-name:var(--font-display)] text-white mb-6">
-            Let&apos;s Start Your <span className="text-gradient">Project</span>
+            {contact.title} <span className="text-gradient">{contact.titleHighlight}</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Share your requirements and our team will help you with the best
-            solution for your business.
+            {contact.subtitle}
           </p>
         </motion.div>
 
@@ -104,28 +85,31 @@ export default function Contact() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-2 space-y-6"
           >
-            {contactInfo.map((info, i) => (
-              <motion.div
-                key={info.label}
-                initial={{ opacity: 0, x: -30 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
-                className="flex items-start gap-4 p-4 rounded-xl bg-dark-2 border border-white/5 hover:border-brand/20 transition-all"
-              >
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                  <info.icon className={`w-5 h-5 ${info.color}`} />
-                </div>
-                <div>
-                  <div className="text-sm text-gray-500 mb-0.5">
-                    {info.label}
+            {contact.info.map((info, i) => {
+              const Icon = iconMap[info.icon] || Mail;
+              return (
+                <motion.div
+                  key={info.label}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+                  className="flex items-start gap-4 p-4 rounded-xl bg-dark-2 border border-white/5 hover:border-brand/20 transition-all"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
+                    <Icon className={`w-5 h-5 ${info.color}`} />
                   </div>
-                  <div className="text-white font-medium">{info.value}</div>
-                </div>
-              </motion.div>
-            ))}
+                  <div>
+                    <div className="text-sm text-gray-500 mb-0.5">
+                      {info.label}
+                    </div>
+                    <div className="text-white font-medium">{info.value}</div>
+                  </div>
+                </motion.div>
+              );
+            })}
 
             <motion.a
-              href="https://wa.me/919311267085"
+              href={`https://wa.me/${contact.whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
@@ -136,9 +120,9 @@ export default function Contact() {
             >
               <MessageCircle className="w-6 h-6 text-emerald-400" />
               <div>
-                <div className="text-white font-semibold">Chat on WhatsApp</div>
+                <div className="text-white font-semibold">{contact.whatsappText}</div>
                 <div className="text-emerald-400 text-sm">
-                  Quick response guaranteed
+                  {contact.whatsappSubtext}
                 </div>
               </div>
             </motion.a>
@@ -158,7 +142,7 @@ export default function Contact() {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm text-gray-400 mb-2">
-                    Your Name
+                    {contact.formLabels.name}
                   </label>
                   <input
                     type="text"
@@ -174,7 +158,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <label className="block text-sm text-gray-400 mb-2">
-                    Email Address
+                    {contact.formLabels.email}
                   </label>
                   <input
                     type="email"
@@ -193,7 +177,7 @@ export default function Contact() {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm text-gray-400 mb-2">
-                    Phone Number
+                    {contact.formLabels.phone}
                   </label>
                   <input
                     type="tel"
@@ -208,7 +192,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <label className="block text-sm text-gray-400 mb-2">
-                    Service Needed
+                    {contact.formLabels.service}
                   </label>
                   <select
                     name="service"
@@ -221,31 +205,18 @@ export default function Contact() {
                     <option value="" className="bg-[#12121a]">
                       Select a service
                     </option>
-                    <option value="branding" className="bg-[#12121a]">
-                      Brand Identity
-                    </option>
-                    <option value="web" className="bg-[#12121a]">
-                      Web Design &amp; Dev
-                    </option>
-                    <option value="social" className="bg-[#12121a]">
-                      Social Media
-                    </option>
-                    <option value="seo" className="bg-[#12121a]">
-                      SEO &amp; Analytics
-                    </option>
-                    <option value="ads" className="bg-[#12121a]">
-                      Paid Advertising
-                    </option>
-                    <option value="content" className="bg-[#12121a]">
-                      Content Creation
-                    </option>
+                    {contact.serviceOptions.map((opt) => (
+                      <option key={opt} value={opt} className="bg-[#12121a]">
+                        {opt}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm text-gray-400 mb-2">
-                  Your Message
+                  {contact.formLabels.message}
                 </label>
                 <textarea
                   name="message"
@@ -279,7 +250,7 @@ export default function Contact() {
                   <span>Sending...</span>
                 ) : (
                   <>
-                    <span className="relative z-10">Send Message</span>
+                    <span className="relative z-10">{contact.formLabels.submit}</span>
                     <Send className="w-5 h-5 relative z-10" />
                     <div className="absolute inset-0 bg-gradient-to-r from-accent to-brand opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </>
@@ -287,8 +258,7 @@ export default function Contact() {
               </motion.button>
 
               <p className="text-center text-sm text-gray-500">
-                We typically respond within{" "}
-                <span className="text-brand-light font-medium">2 hours</span>
+                {contact.responseTime}
               </p>
             </form>
           </motion.div>

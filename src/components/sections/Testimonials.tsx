@@ -3,47 +3,18 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { SiteContent } from "@/data/siteContent";
 
-const testimonials = [
-  {
-    quote:
-      "BrandForge Media transformed our online presence completely. Our engagement grew 300% in just 3 months. They truly understand digital marketing.",
-    name: "Rahul Sharma",
-    role: "Founder, TechStart Solutions",
-    rating: 5,
-  },
-  {
-    quote:
-      "The team at BrandForge delivered beyond our expectations. Our website redesign led to a 250% increase in conversions. Highly recommended!",
-    name: "Priya Patel",
-    role: "CEO, Luxe Boutique",
-    rating: 5,
-  },
-  {
-    quote:
-      "Working with BrandForge was a game-changer. Their social media strategy helped us reach 50K followers in just 6 months.",
-    name: "Amit Kumar",
-    role: "Director, FoodieHub",
-    rating: 5,
-  },
-  {
-    quote:
-      "Professional, creative, and results-driven. BrandForge Media helped us establish a strong brand identity from scratch.",
-    name: "Sneha Reddy",
-    role: "Co-founder, HealthFirst",
-    rating: 5,
-  },
-];
-
-export default function Testimonials() {
+export default function Testimonials({ content }: { content: SiteContent }) {
+  const { testimonials } = content;
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [idx, setIdx] = useState(0);
 
-  const next = () => setIdx((i) => (i + 1) % testimonials.length);
+  const next = () => setIdx((i) => (i + 1) % testimonials.items.length);
   const prev = () =>
-    setIdx((i) => (i - 1 + testimonials.length) % testimonials.length);
-  const t = testimonials[idx];
+    setIdx((i) => (i - 1 + testimonials.items.length) % testimonials.items.length);
+  const t = testimonials.items[idx];
 
   return (
     <section className="relative py-32 overflow-hidden">
@@ -57,13 +28,13 @@ export default function Testimonials() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-5">
-            Testimonials
+            {testimonials.badge}
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black font-[family-name:var(--font-display)] text-white mb-4">
-            What Our Clients <span className="text-gradient">Say</span>
+            {testimonials.title} <span className="text-gradient">{testimonials.titleHighlight}</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-xl mx-auto">
-            Real results from real businesses we&apos;ve helped grow.
+            {testimonials.subtitle}
           </p>
         </motion.div>
 
@@ -117,7 +88,7 @@ export default function Testimonials() {
 
             <div className="flex items-center justify-between mt-6 pt-5 border-t border-white/5">
               <div className="flex gap-2">
-                {testimonials.map((_, i) => (
+                {testimonials.items.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setIdx(i)}

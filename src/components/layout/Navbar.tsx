@@ -3,20 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
+import { SiteContent } from "@/data/siteContent";
 
-const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "Services", href: "#services" },
-  { name: "About", href: "#about" },
-  { name: "Work", href: "#portfolio" },
-  { name: "Process", href: "#process" },
-  { name: "Contact", href: "#contact" },
-];
-
-export default function Navbar() {
+export default function Navbar({ content }: { content: SiteContent }) {
+  const { navLinks } = content;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [active, setActive] = useState("Home");
+  const [active, setActive] = useState(navLinks[0]?.name || "Home");
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const { scrollYProgress } = useScroll();
@@ -48,7 +41,7 @@ export default function Navbar() {
 
     elements.forEach((el) => observerRef.current!.observe(el));
     return () => observerRef.current?.disconnect();
-  }, []);
+  }, [navLinks]);
 
   return (
     <>
@@ -71,7 +64,7 @@ export default function Navbar() {
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <span className="text-lg font-bold font-[family-name:var(--font-display)] text-white">
-              BrandForge<span className="text-brand-light">.media</span>
+              {content.footer.brandName}<span className="text-brand-light">{content.footer.brandTagline}</span>
             </span>
           </a>
 

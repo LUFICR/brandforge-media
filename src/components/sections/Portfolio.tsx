@@ -3,76 +3,18 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { ExternalLink, ArrowUpRight } from "lucide-react";
+import { SiteContent } from "@/data/siteContent";
 
-const projects = [
-  {
-    title: "TechStart Rebrand",
-    category: "Branding",
-    description:
-      "Complete brand overhaul for a tech startup — logo, identity system, and digital presence.",
-    gradient: "from-violet-600 to-indigo-600",
-    tags: ["Logo", "Brand Guide", "Web"],
-  },
-  {
-    title: "FoodieHub Marketing",
-    category: "Social Media",
-    description:
-      "Social media strategy that grew engagement by 400% in 4 months.",
-    gradient: "from-pink-600 to-rose-600",
-    tags: ["Instagram", "Content", "Ads"],
-  },
-  {
-    title: "Luxe Fashion Store",
-    category: "E-Commerce",
-    description:
-      "Premium e-commerce website with seamless shopping experience.",
-    gradient: "from-amber-600 to-orange-600",
-    tags: ["Web Design", "Shopify", "SEO"],
-  },
-  {
-    title: "HealthFirst App",
-    category: "Digital Marketing",
-    description:
-      "Full-funnel digital marketing campaign driving 10K+ app downloads.",
-    gradient: "from-emerald-600 to-teal-600",
-    tags: ["Google Ads", "Meta", "ASO"],
-  },
-  {
-    title: "EduLearn Platform",
-    category: "Web Development",
-    description: "Custom learning management system with modern UI/UX.",
-    gradient: "from-cyan-600 to-blue-600",
-    tags: ["React", "UI/UX", "Backend"],
-  },
-  {
-    title: "GreenEarth Campaign",
-    category: "Content",
-    description:
-      "Viral content campaign for environmental awareness nonprofit.",
-    gradient: "from-lime-600 to-green-600",
-    tags: ["Video", "Social", "PR"],
-  },
-];
-
-const categories = [
-  "All",
-  "Branding",
-  "Social Media",
-  "Web Development",
-  "Digital Marketing",
-  "Content",
-  "E-Commerce",
-];
-
-export default function Portfolio() {
+export default function Portfolio({ content }: { content: SiteContent }) {
+  const { portfolio } = content;
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeFilter, setActiveFilter] = useState("All");
 
   const filtered =
     activeFilter === "All"
-      ? projects
-      : projects.filter((p) => p.category === activeFilter);
+      ? portfolio.projects
+      : portfolio.projects.filter((p) => p.category === activeFilter);
 
   return (
     <section id="portfolio" className="relative py-32 overflow-hidden">
@@ -86,14 +28,13 @@ export default function Portfolio() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-400 text-sm font-medium mb-6">
-            Our Work
+            {portfolio.badge}
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black font-[family-name:var(--font-display)] text-white mb-6">
-            Projects That <span className="text-gradient">Speak</span>
+            {portfolio.title} <span className="text-gradient">{portfolio.titleHighlight}</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            A selection of our recent work across branding, web design, and
-            digital marketing.
+            {portfolio.subtitle}
           </p>
         </motion.div>
 
@@ -104,7 +45,7 @@ export default function Portfolio() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-wrap justify-center gap-3 mb-14"
         >
-          {categories.map((cat) => (
+          {portfolio.categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
@@ -123,7 +64,7 @@ export default function Portfolio() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((project, i) => (
             <motion.div
-              key={project.title}
+              key={project.id}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.1 * i }}

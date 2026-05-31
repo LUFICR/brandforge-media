@@ -3,40 +3,14 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { Plus, Minus } from "lucide-react";
-
-const faqs = [
-  {
-    q: "What services does BrandForge Media offer?",
-    a: "We offer a comprehensive range of digital marketing services including brand identity design, web development, social media management, SEO optimization, paid advertising, content creation, and digital strategy consulting.",
-  },
-  {
-    q: "How long does a typical project take?",
-    a: "Project timelines vary based on scope. A logo design takes 3-5 days, brand identity 1-2 weeks, website development 2-4 weeks, and ongoing marketing campaigns are managed monthly. We always provide clear timelines upfront.",
-  },
-  {
-    q: "What are your pricing plans?",
-    a: "We offer flexible pricing tailored to your business needs. Packages start from affordable basic plans to comprehensive premium packages. Contact us for a free consultation and custom quote.",
-  },
-  {
-    q: "Do you work with businesses outside India?",
-    a: "Absolutely! While we're based in India, we work with clients globally. Our digital-first approach means we can collaborate seamlessly regardless of location.",
-  },
-  {
-    q: "What makes BrandForge different from other agencies?",
-    a: "We combine premium design quality with strategic thinking. Every project gets personalized attention, we offer 24/7 support, fast turnaround times, and most importantly — we focus on measurable results, not just aesthetics.",
-  },
-  {
-    q: "Can you handle ongoing social media management?",
-    a: "Yes! We offer monthly social media management packages that include content creation, posting, engagement management, analytics reporting, and strategy optimization to keep your brand growing consistently.",
-  },
-];
+import { SiteContent } from "@/data/siteContent";
 
 function FAQItem({
   faq,
   isOpen,
   toggle,
 }: {
-  faq: (typeof faqs)[0];
+  faq: { question: string; answer: string };
   isOpen: boolean;
   toggle: () => void;
 }) {
@@ -47,7 +21,7 @@ function FAQItem({
         className="w-full flex items-center justify-between py-5 text-left group"
       >
         <span className="text-base sm:text-lg font-semibold text-white group-hover:text-brand-light transition-colors duration-200 pr-4 font-[family-name:var(--font-display)]">
-          {faq.q}
+          {faq.question}
         </span>
         <div
           className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
@@ -73,7 +47,7 @@ function FAQItem({
             className="overflow-hidden"
           >
             <p className="pb-5 text-gray-400 leading-relaxed text-sm sm:text-base pr-10">
-              {faq.a}
+              {faq.answer}
             </p>
           </motion.div>
         )}
@@ -82,7 +56,8 @@ function FAQItem({
   );
 }
 
-export default function FAQ() {
+export default function FAQ({ content }: { content: SiteContent }) {
+  const { faq } = content;
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [openIdx, setOpenIdx] = useState<number | null>(0);
@@ -99,13 +74,13 @@ export default function FAQ() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-5">
-            FAQ
+            {faq.badge}
           </span>
           <h2 className="text-4xl sm:text-5xl font-black font-[family-name:var(--font-display)] text-white mb-4">
-            Frequently Asked <span className="text-gradient">Questions</span>
+            {faq.title} <span className="text-gradient">{faq.titleHighlight}</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-xl mx-auto">
-            Everything you need to know about working with us.
+            {faq.subtitle}
           </p>
         </motion.div>
 
@@ -115,10 +90,10 @@ export default function FAQ() {
           transition={{ duration: 0.7, delay: 0.12 }}
           className="rounded-2xl bg-dark-2 border border-white/5 p-5 sm:p-7"
         >
-          {faqs.map((faq, i) => (
+          {faq.items.map((item, i) => (
             <FAQItem
-              key={i}
-              faq={faq}
+              key={item.id}
+              faq={item}
               isOpen={openIdx === i}
               toggle={() => setOpenIdx(openIdx === i ? null : i)}
             />
